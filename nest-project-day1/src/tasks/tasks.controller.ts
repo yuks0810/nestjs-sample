@@ -1,5 +1,6 @@
-import { Controller, Body, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
-import { pseudoRandomBytes } from 'crypto';
+import { Controller, Body, Delete, Get, Param, ParseIntPipe, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { TaskPropertyDto } from './dto/task-property.dto';
+import { TaskStatusPipe } from './pipe/task-status.pipe';
 
 @Controller('tasks')
 export class TasksController {
@@ -17,10 +18,11 @@ export class TasksController {
     }
 
     @Post()
+    @UsePipes(ValidationPipe)
     createTask(
-        @Body('title') title: string,
-        @Body('description') description: string
+        @Body() TaskPropertyDto: TaskPropertyDto
     ) {
+        const { title, description } = TaskPropertyDto
         return `createTask Success! Parameter [title: ${title}, description: ${description}]`
     }
 
