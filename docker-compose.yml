@@ -12,7 +12,10 @@ services:
       - type: bind
         source: .
         target: /api
-    command: npm run start:dev --prefix ./nest-project-day1
+    # command: npm run start:dev --prefix ./nest-project-day1
+    env_file:
+      - .env/default.env
+      - .env/development.env
   db:
     image: mysql:5.7
     container_name: mysql_host
